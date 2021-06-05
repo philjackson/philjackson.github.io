@@ -4,7 +4,9 @@ title:  Having Smartparens commands work with Evil-mc
 date:   2021-06-05 00:38:51 +0100
 categories: elisp evil-mc smartparens
 ---
-When using [evil-mc](https://github.com/gabesoft/evil-mc), it's very
+[As described
+here](https://hungyi.net/posts/how-to-evil-mc-smartparens/), when
+using [evil-mc](https://github.com/gabesoft/evil-mc), it's very
 frustrating when a [Smartparens](https://github.com/Fuco1/smartparens)
 command works on only the first of the multiple cursors. Here's how to
 fix that:
