@@ -1,29 +1,44 @@
 ---
 layout: post
-title:  "Welcome to Jekyll!"
+title:  Having Smartparens commands work with Evil-mc
 date:   2021-06-05 00:38:51 +0100
-categories: jekyll update
+categories: elisp
 ---
-You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
 
-Jekyll requires blog post files to be named according to the following format:
+When using [evil-mc](https://github.com/gabesoft/evil-mc), it's very
+frustrating when a [Smartparens](https://github.com/Fuco1/smartparens)
+command works on only the first of the multiple cursors. Here's how to
+fix that:
 
-`YEAR-MONTH-DAY-title.MARKUP`
-
-Where `YEAR` is a four-digit number, `MONTH` and `DAY` are both two-digit numbers, and `MARKUP` is the file extension representing the format used in the file. After that, include the necessary front matter. Take a look at the source for this post to get an idea about how it works.
-
-Jekyll also offers powerful support for code snippets:
-
-{% highlight ruby %}
-def print_hi(name)
-  puts "Hi, #{name}"
-end
-print_hi('Tom')
-#=> prints 'Hi, Tom' to STDOUT.
-{% endhighlight %}
-
-Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
-
-[jekyll-docs]: https://jekyllrb.com/docs/home
-[jekyll-gh]:   https://github.com/jekyll/jekyll
-[jekyll-talk]: https://talk.jekyllrb.com/
+```elisp
+(dolist (sp-command '(sp-up-sexp
+                      sp-copy-sexp
+                      sp-down-sexp
+                      sp-join-sexp
+                      sp-kill-sexp
+                      sp-next-sexp
+                      sp-split-sexp
+                      sp-wrap-curly
+                      sp-wrap-round
+                      sp-raise-sexp
+                      sp-clone-sexp
+                      sp-wrap-square
+                      sp-splice-sexp
+                      sp-end-of-sexp
+                      sp-forward-sexp
+                      sp-backward-sexp
+                      sp-convolute-sexp
+                      sp-transpose-sexp
+                      sp-kill-whole-line
+                      sp-beginning-of-sexp
+                      sp-forward-barf-sexp
+                      sp-forward-slurp-sexp
+                      sp-backward-barf-sexp
+                      sp-backward-slurp-sexp
+                      sp-splice-sexp-killing-forward
+                      sp-splice-sexp-killing-backward))
+    (add-to-list
+     'evil-mc-custom-known-commands
+     `(,sp-command
+       (:default . evil-mc-execute-call))))
+```
