@@ -19,6 +19,7 @@
 # in the templates via {{ site.myvariable }}.
 
 title: Stuff I'd just forget otherwise
+author: Phil Jackson
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: philjackson
