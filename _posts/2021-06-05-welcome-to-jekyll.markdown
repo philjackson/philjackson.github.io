@@ -2,7 +2,7 @@
 layout: post
 title:  Having Smartparens commands work with Evil-mc
 date:   2021-06-05 00:38:51 +0100
-categories: elisp
+categories: elisp evil-mc smartparens
 ---
 
 When using [evil-mc](https://github.com/gabesoft/evil-mc), it's very
