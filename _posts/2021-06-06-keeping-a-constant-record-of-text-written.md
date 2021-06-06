@@ -2,7 +2,7 @@
 layout: post
 title:  Keeping a constant record of text written
 date:   Sun  6 Jun 14:54:16 BST 2021
-categories: text shell writing
+categories: text shell writing git
 ---
 
 If ever I'm writing a chunk of text that will change a lot over time,
