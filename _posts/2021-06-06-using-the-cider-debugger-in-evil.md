@@ -20,3 +20,4 @@ mode instead:
 (add-hook 'cider--debug-mode-hook 'my-cider-debug-toggle-insert-state)
 ```
 
+Borrowed from [here.](https://emacs.stackexchange.com/questions/20804)
