@@ -38,3 +38,4 @@ future: false
 exclude:
 - README.md
 - LICENSE.md
+- .#*
