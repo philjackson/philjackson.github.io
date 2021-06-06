@@ -38,4 +38,5 @@ future: false
 exclude:
 - README.md
 - LICENSE.md
-- .#*
+- scripts/
+- .#_config

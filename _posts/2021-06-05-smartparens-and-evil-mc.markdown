@@ -2,7 +2,7 @@
 layout: post
 title:  Having Smartparens commands work with Evil-mc
 date:   2021-06-05 00:38:51 +0100
-categories: elisp evil-mc smartparens
+categories: elisp evil-mc smartparens emacs
 ---
 [As described
 here](https://hungyi.net/posts/how-to-evil-mc-smartparens/), when
