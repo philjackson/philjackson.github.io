@@ -12,7 +12,10 @@ layout: compress
   {% for post in site.posts %}
   <article>
     <h3><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h3>
-    <span class="mini-note">{{ post.date | date: "%b %-d, %Y" }}</span>
+    <div class="post-info">
+      <span class="mini-note">{{ post.date | date: "%b %-d, %Y" }}</span>
+      <div class="category-list">{{ post.categories | join: ", " }}</div>
+    </div>
     <div class="excerpt">{{ post.excerpt }}</p>
   </article>
   {% endfor %}

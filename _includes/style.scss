@@ -195,13 +195,12 @@ figure {
     }
 }
 
-/*span*/.mini-note {
-    display: block;
+.mini-note, .category-list {
     font-size: 80%;
     font-style: italic;
 }
 
-/*div*/.epigraph {
+.epigraph {
     margin: 4rem 0;
 
     blockquote {
@@ -525,4 +524,16 @@ nav {
 }
 .highlight .w {
   color: #bbbbbb;
+}
+
+.post-info {
+    display: flex;
+    justify-content: space-between;
+    max-width: 55%;
+}
+
+.category-list {
+    text-align: right;
+    font-size: 80%;
+    font-style: italic;
 }
