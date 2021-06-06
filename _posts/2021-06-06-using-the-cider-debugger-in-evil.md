@@ -5,9 +5,11 @@ date:   Sun  6 Jun 17:00:40 BST 2021
 categories: emacs evil cider debugging
 ---
 
-When using evil and CIDER together, you might find that rebinding the
-keys required to control the debugger is a pain. Luckily, you don't
-actually have to, you can just enter insert mode instead:
+When using [evil](https://github.com/emacs-evil/evil) and
+[CIDER](https://github.com/clojure-emacs/cider) together, you might
+find that rebinding the keys required to control the debugger is a
+pain. Luckily, you don't actually have to, you can just enter insert
+mode instead:
 
 ```elisp
 (defun my-cider-debug-toggle-insert-state ()
