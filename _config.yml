@@ -3,8 +3,8 @@
 
 title: Snippets and other bits
 description: Random stuff, mostly Clojure/Emacs, I expect.
-url: ""
-host: 0.0.0.0
+url: "https://philjackson.github.io"
+host: 127.0.0.1
 
 #########################
 # more settings
