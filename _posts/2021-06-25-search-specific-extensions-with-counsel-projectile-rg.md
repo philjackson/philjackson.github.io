@@ -16,3 +16,5 @@ If you're in a monorepo searching through stuff can be a bit chaotic. Here's a w
                                                  "*.css"))))
       (counsel-projectile-rg (concat "--glob " glob))))
 ```
+
+First it'll list the extensions with Ivy, then lets you input a search term as normal.
