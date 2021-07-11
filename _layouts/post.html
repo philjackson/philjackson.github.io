@@ -1,27 +1,21 @@
 ---
 layout: compress
 ---
-
 {% include head.html %}
 
-    <main>
+<main>
+  {% include header.html %}
+  <article>
+    <h1>{{ page.title }}</h1>
+    <p>{{ page.date | date: "%b %-d, %Y" }}</p>
+    {{ page.content }}
+    <div class="end-of-content"></div>
+    <hr>
+    <p><a href="{{ site.baseurl }}/articles">← Back to all articles</a></p>
+  </article>
+</main>
 
-        {% include header.html %}
-
-        <article>
-            <h1>{{ page.title }}</h1>
-            <p class="subtitle">{{ page.date | date: "%b %-d, %Y" }}</p>
-
-            {{ page.content }}
-
-            <hr>
-
-            <p><a href="{{ site.baseurl }}/articles">← Back to all articles</a></p>
-        </article>
-
-    </main>
-
-    {% include footer-post.html %}
+{% include footer-post.html %}
 
 </body>
 </html>
