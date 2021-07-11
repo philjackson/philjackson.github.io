@@ -773,27 +773,23 @@ vertical splits"
   :init (setq doom-themes-enable-bold t
               doom-themes-enable-italic t)
   :config
-  ;; (progn
-  ;;   (load-theme 'doom-challenger-deep t)
-  ;;   (set-face-attribute 'markdown-code-face nil :background "#32333d")
-  ;;   (set-face-attribute 'font-lock-comment-face nil :foreground "#999")
-  ;;   (set-face-attribute 'show-paren-match nil :foreground "#111" :background "orange"))
+  ;; list of themes (just called as functions) which also contain
+  ;; theme specific config
+  (let* ((funs '((lambda () (load-theme 'doom-outrun-electric))
+                 (lambda () (load-theme 'doom-palenight))
+                 (lambda ()
+                   (load-theme 'doom-challenger-deep t)
+                   (set-face-attribute 'markdown-code-face nil :background "#32333d")
+                   (set-face-attribute 'font-lock-comment-face nil :foreground "#999"))
+                 (lambda ()
+                   (load-theme 'doom-dracula t)
+                   (set-face-attribute 'ivy-minibuffer-match-face-1 nil :foreground "pink"))))
+         (rand (random (length funs))))
+    (funcall (nth rand funs)))
 
-  (progn
-    (load-theme 'doom-dracula t)
-    (set-face-attribute 'ivy-minibuffer-match-face-1 nil :foreground "pink"))
-
-  (progn
-    ;;(load-theme 'doom-gruvbox t)
-    ;; (load-theme 'doom-nord t)
-    ;; (progn
-    ;;   (load-theme 'doom-horizon t)
-    ;;   (set-face-attribute 'show-paren-match nil :foreground "#111" :background "orange")
-    ;;   (set-face-attribute 'font-lock-comment-face nil :foreground "#777"))
-
-    ;; (progn
-    ;;   (load-theme 'doom-outrun-electric))
-    (doom-themes-org-config)))
+  ;; any global theme config goes here
+  (set-face-attribute 'show-paren-match nil :foreground "#111" :background "orange")
+  (doom-themes-org-config))
 
 (use-package all-the-icons
   :ensure t)
