@@ -1,5 +1,6 @@
 ---
 layout: default
+title: All categories
 ---
 
 <h2>Categories</h2>
