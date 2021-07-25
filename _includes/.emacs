@@ -32,15 +32,6 @@
                                       "14"
                                     "11")))
 
-;; (set-face-attribute 'default nil
-;;                     :font "Iosevka 12")
-
-;; (set-face-attribute 'default nil
-;;                     :font (concat "IBM Plex Mono "
-;;                                   (if (on-laptop?)
-;;                                       "12"
-;;                                     "10")))
-
 ;; this makes using simple, inline lambdas much nicer
 (defmacro interactively (&rest body)
   (declare (indent 0))
@@ -417,8 +408,10 @@ vertical splits"
 (use-package flyspell
   :ensure t
   :delight
-  :hook (((emacs-lisp-mode) . flyspell-prog-mode)
-         ((text-mode markdown-mode) . flyspell-mode))
+  :hook (((clojure-mode
+           clojurescript-mode
+           emacs-lisp-mode
+           text-mode markdown-mode) . flyspell-prog-mode))
   :init (setq-default ispell-program-name "aspell"
                       ispell-local-dictionary "british")
   :config
@@ -677,6 +670,8 @@ vertical splits"
   :hook (((clojure-mode clojurescript-mode sql-mode) . lsp))
   :init
   (setq lsp-lens-enable t
+        lsp-modeline-code-actions-enable nil
+        lsp-modeline-diagnostics-enable nil
         lsp-enable-indentation nil
         lsp-headerline-breadcrumb-enable nil
         lsp-prefer-flymake nil)
@@ -777,13 +772,18 @@ vertical splits"
   ;; theme specific config
   (let* ((funs '((lambda () (load-theme 'doom-outrun-electric))
                  (lambda () (load-theme 'doom-palenight))
+                 (lambda () (load-theme 'doom-wilmersdorf))
+                 (lambda () (load-theme 'doom-snazzy))
                  (lambda ()
                    (load-theme 'doom-challenger-deep t)
-                   (set-face-attribute 'markdown-code-face nil :background "#32333d")
-                   (set-face-attribute 'font-lock-comment-face nil :foreground "#999"))
+                   (set-face-attribute 'markdown-code-face nil
+                                       :background "#32333d")
+                   (set-face-attribute 'font-lock-comment-face nil
+                                       :foreground "#999"))
                  (lambda ()
                    (load-theme 'doom-dracula t)
-                   (set-face-attribute 'ivy-minibuffer-match-face-1 nil :foreground "pink"))))
+                   (set-face-attribute 'ivy-minibuffer-match-face-1 nil
+                                       :foreground "pink"))))
          (rand (random (length funs))))
     (funcall (nth rand funs)))
 
@@ -1013,7 +1013,6 @@ vertical splits"
 (add-hook 'auto-save-hook 'my-desktop-save)
 
 (use-package evil-fringe-mark
-  :disabled
   :ensure t
   :init (setq-default left-margin-width 2)
   :config (global-evil-fringe-mark-mode))
