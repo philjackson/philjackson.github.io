@@ -2,7 +2,7 @@
 layout: post
 title:  condev - like cond but different
 date:   Mon 26 Jul 16:12:21 BST 2021
-categories: Clojure
+categories: clojure
 ---
 Hopefully the docstring explains this well enough:
 
