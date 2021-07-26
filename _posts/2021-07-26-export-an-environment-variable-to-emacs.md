@@ -2,7 +2,7 @@
 layout: post
 title:  Export an environment variable to Emacs
 date:   Mon 26 Jul 16:04:50 BST 2021
-categories: emacs
+categories: emacs shell
 ---
 
 Handy function to export environment variables to Emacs from the command line:
