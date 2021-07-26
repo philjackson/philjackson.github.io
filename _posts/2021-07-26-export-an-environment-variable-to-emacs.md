@@ -27,6 +27,8 @@ export BLAH="Some value"
 export-emacs BLAH
 ```
 
+And in emacs:
+
 ```elisp
 (getenv "BLAH") ; => "Some value"
 ```
