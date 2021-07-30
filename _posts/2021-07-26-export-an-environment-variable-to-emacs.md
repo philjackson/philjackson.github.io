@@ -14,7 +14,7 @@ function export-emacs {
     fi
 
     for name in "${@}"; do
-        value=$(eval echo \"\$${name}\")
+        value=$(eval echo \"\${${name}//\\\"/\\\\042}\")
         emacsclient -e "(setenv \"${name}\" \"${value}\")" >/dev/null
     done
 }
@@ -32,3 +32,8 @@ And in emacs:
 ```elisp
 (getenv "BLAH") ; => "Some value"
 ```
+
+*update*: A very kind soul [updated the
+function](https://github.com/philjackson/philjackson.github.io/issues/1)
+to handle quoting properly. Thanks,
+[@pcrama](https://github.com/pcrama)!
