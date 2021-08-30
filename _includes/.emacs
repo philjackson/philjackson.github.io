@@ -18,6 +18,9 @@
 (show-paren-mode 1)
 (save-place-mode 1)
 
+(global-set-key (kbd "C-+") 'text-scale-increase)
+(global-set-key (kbd "C--") 'text-scale-decrease)
+
 (setq ring-bell-function 'ignore
       visible-bell nil)
 
@@ -260,12 +263,6 @@ vertical splits"
                                                  (unpushed . show)
                                                  (pullreqs . show))))
 
-(use-package evil-collection
-  :ensure t
-  :after magit evil
-  :custom (evil-collection-setup-minibuffer t)
-  :config (evil-collection-init))
-
 (use-package undo-fu
   :ensure t
   :after evil
@@ -345,14 +342,20 @@ vertical splits"
           conf-mode) . rainbow-mode)
   :ensure t)
 
+(use-package org
+  :ensure t
+  :config
+  (setq org-agenda-files '("~/org")))
+
 (use-package projectile
   :ensure t
   :delight
-  :after evil-leader
+  :after evil-leader org
   :config
+  (projectile-mode)
+  (setq org-agenda-files (delete-dups (append org-agenda-files projectile-known-projects)))
   (evil-leader/set-key
-    "pt" 'projectile-toggle-between-implementation-and-test)
-  (projectile-mode))
+    "pt" 'projectile-toggle-between-implementation-and-test))
 
 (use-package counsel
   :ensure t
@@ -383,8 +386,8 @@ vertical splits"
 
 (use-package wgrep
   :ensure t
-  :bind (:map ivy-occur-grep-mode-map
-              ("e" . #'ivy-wgrep-change-to-wgrep-mode))
+  ;; :bind (:map ivy-occur-grep-mode-map
+  ;;             ("e" . #'ivy-wgrep-change-to-wgrep-mode))
   :config
   (evil-set-initial-state 'ivy-occur-grep-mode 'normal))
 
@@ -400,8 +403,16 @@ vertical splits"
 (use-package counsel-projectile
   :ensure t
   :config
+  ;; default action of `counsel-projectile-switch-project' will now be
+  ;; to open dired.
+  (counsel-projectile-modify-action
+   'counsel-projectile-switch-project-action
+   '((default counsel-projectile-switch-project-action-dired)))
+
   (evil-leader/set-key
-    "pp" 'counsel-projectile
+    "pc" 'counsel-projectile-org-capture
+    "pa" 'counsel-projectile-org-agenda
+    "pp" 'counsel-projectile-switch-project
     "ps" 'counsel-projectile-rg
     "pS" 'search-specific-glob))
 
@@ -410,21 +421,21 @@ vertical splits"
   :delight
   :hook (((clojure-mode
            clojurescript-mode
-           emacs-lisp-mode
-           text-mode markdown-mode) . flyspell-prog-mode))
+           yaml-mode) . flyspell-prog-mode)
+         ((markdown-mode) . flyspell-mode))
   :init (setq-default ispell-program-name "aspell"
                       ispell-local-dictionary "british")
   :config
   (evil-leader/set-key
     "sb" 'flyspell-buffer
     "sn" 'flyspell-goto-next-error)
-  (flyspell-prog-mode)
   ;; don't spellcheck inline code faces for markdown-mode
-  (setq flyspell-generic-check-word-predicate
-        #'(lambda ()
-            (let ((f (get-text-property (- (point) 1) 'face)))
-              (not (memq f '(markdown-pre-face
-                             markdown-inline-code-face)))))))
+  ;; (setq flyspell-generic-check-word-predicate
+  ;;       #'(lambda ()
+  ;;           (let ((f (get-text-property (- (point) 1) 'face)))
+  ;;             (not (memq f '(markdown-pre-face
+  ;;                            markdown-inline-code-face))))))
+  )
 
 (use-package clojure-mode
   :ensure t)
@@ -679,7 +690,8 @@ vertical splits"
   (evil-leader/set-key-for-mode 'clojure-mode
     "rC" 'cider-jack-in'
     "rs" 'lsp-rename
-    "rc" 'lsp-clojure-clean-ns)
+    "rc" 'lsp-clojure-clean-ns
+    "."  'lsp-find-definition)
   (evil-leader/set-key-for-mode 'clojurescript-mode
     "rC" 'cider-connect-cljs
     "rs" 'lsp-rename
@@ -709,7 +721,8 @@ vertical splits"
          (evil-org-mode-hook . evil-org-set-key-theme))
   :config
   (require 'evil-org-agenda)
-  (evil-org-agenda-set-keys))
+  (evil-org-agenda-set-keys)
+  (evil-define-key 'normal org-mode-map (kbd "RET") 'org-open-at-point))
 
 (use-package sql
   :ensure t
@@ -770,22 +783,24 @@ vertical splits"
   :config
   ;; list of themes (just called as functions) which also contain
   ;; theme specific config
-  (let* ((funs '((lambda () (load-theme 'doom-outrun-electric))
-                 (lambda () (load-theme 'doom-palenight))
-                 (lambda () (load-theme 'doom-wilmersdorf))
-                 (lambda () (load-theme 'doom-snazzy))
-                 (lambda ()
-                   (load-theme 'doom-challenger-deep t)
-                   (set-face-attribute 'markdown-code-face nil
-                                       :background "#32333d")
-                   (set-face-attribute 'font-lock-comment-face nil
-                                       :foreground "#999"))
-                 (lambda ()
-                   (load-theme 'doom-dracula t)
-                   (set-face-attribute 'ivy-minibuffer-match-face-1 nil
-                                       :foreground "pink"))))
-         (rand (random (length funs))))
-    (funcall (nth rand funs)))
+  ;; (let* ((funs '((lambda () (load-theme 'doom-outrun-electric))
+  ;;                (lambda () (load-theme 'doom-palenight))
+  ;;                (lambda () (load-theme 'doom-wilmersdorf))
+  ;;                (lambda () (load-theme 'doom-snazzy))
+  ;;                (lambda ()
+  ;;                  (load-theme 'doom-challenger-deep t)
+  ;;                  (set-face-attribute 'markdown-code-face nil
+  ;;                                      :background "#32333d")
+  ;;                  (set-face-attribute 'font-lock-comment-face nil
+  ;;                                      :foreground "#999"))
+  ;;                (lambda ()
+  ;;                  (load-theme 'doom-dracula t)
+  ;;                  (set-face-attribute 'ivy-minibuffer-match-face-1 nil
+  ;;                                      :foreground "pink"))))
+  ;;        (rand (random (length funs))))
+  ;;   (funcall (nth rand funs)))
+
+  (load-theme 'doom-challenger-deep t)
 
   ;; any global theme config goes here
   (set-face-attribute 'show-paren-match nil :foreground "#111" :background "orange")
@@ -862,47 +877,6 @@ vertical splits"
           (gbp "1.34 * usd" "British Pound")
           (usd nil "United States Dollar"))
         math-units-table nil))
-
-(use-package org
-  :ensure t)
-
-(use-package org-roam
-  :ensure t
-  :disabled
-  :config
-  (require 'org-roam-protocol)
-  (org-roam-mode t)
-  (setq org-roam-directory "~/org-roam"))
-
-(use-package org-roam-server
-  :ensure t
-  :disabled
-  :config
-  (setq org-roam-server-host "127.0.0.1"
-        org-roam-server-port 8080
-        org-roam-server-authenticate nil
-        org-roam-server-export-inline-images t
-        org-roam-server-serve-files nil
-        org-roam-server-network-poll t
-        org-roam-server-network-arrows nil
-        org-roam-server-network-label-truncate t
-        org-roam-server-network-label-truncate-length 60
-        org-roam-server-network-label-wrap-length 20)
-  (org-roam-server-mode t))
-
-(use-package centaur-tabs
-  :ensure t
-  :disabled
-  :config
-  (setq centaur-tabs-style "box"
-        centaur-tabs-height 32
-        centaur-tabs-set-bar 'under
-        centaur-tabs-set-modified-marker t
-        centaur-tabs-set-icons t
-        uniquify-separator "/"
-        uniquify-buffer-name-style 'forward)
-  (centaur-tabs-headline-match)
-  (centaur-tabs-mode t))
 
 (use-package treemacs
   :ensure t
@@ -993,6 +967,7 @@ vertical splits"
   (evil-owl-mode t))
 
 (use-package desktop
+  :disabled
   :init (setq desktop-dirname             "~/.emacs.d/"
               desktop-path                (list desktop-dirname)
               desktop-base-file-name      "desktop.el"
@@ -1026,3 +1001,13 @@ vertical splits"
   :ensure t
   :after (vimish-fold evil)
   :config (global-evil-vimish-fold-mode 1))
+
+(use-package restclient
+  :ensure t
+  :mode (("\\.restclient\\'" . restclient-mode)))
+
+(use-package evil-collection
+  :ensure t
+  :after magit evil
+  :custom (evil-collection-setup-minibuffer t)
+  :config (evil-collection-init))
