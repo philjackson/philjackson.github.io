@@ -1,5 +1,8 @@
-# ET-Jekyll
-A minimal Jekyll theme inspired by <a href="https://github.com/edwardtufte/tufte-css">Tufte CSS</a>
+# Run
 
-### Live Demo
-A live demo with detailed instructions can be found <a href="https://et-jekyll.netlify.com/et-jekyll-theme/">here</a>.
+For me, anyway...
+
+```bash
+rvm use ruby-2.7.3
+jekyll serve
+```
