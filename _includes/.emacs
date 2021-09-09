@@ -422,7 +422,7 @@ vertical splits"
   :hook (((clojure-mode
            clojurescript-mode
            yaml-mode) . flyspell-prog-mode)
-         ((markdown-mode) . flyspell-mode))
+         ((text-mode) . flyspell-mode))
   :init (setq-default ispell-program-name "aspell"
                       ispell-local-dictionary "british")
   :config
@@ -1011,3 +1011,7 @@ vertical splits"
   :after magit evil
   :custom (evil-collection-setup-minibuffer t)
   :config (evil-collection-init))
+
+(use-package magit-delta
+  :ensure t
+  :hook (magit-mode . magit-delta-mode))
