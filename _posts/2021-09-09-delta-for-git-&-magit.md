@@ -9,7 +9,7 @@ I was just introduced to a [tool called
 Delta](https://github.com/dandavison/delta) which is a pager you can
 use with Git to give you Github-esque diffs.
 
-![Magit and Delta](/assets/img/magit-delta-ss.png)
+![Magit and Delta](/assets/img/magit-delta.png)
 
 Tiny bit of elisp to configure:
 
