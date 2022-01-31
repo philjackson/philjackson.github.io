@@ -2,7 +2,7 @@
 layout: post
 title:  Keeping backups of every edited file
 date:   Mon 31 Jan 15:28:13 GMT 2022
-categories: emacs
+categories: emacs backups
 ---
 I recently ran `rm -rf *` in my home directory, which apart from being
 very foolish, reminded me that I have backups of basically every file
