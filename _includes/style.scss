@@ -58,9 +58,12 @@ code {
     border-radius: 5px;
     padding: 5px;
 
+
     pre {
-        overflow-x: auto;
         font-size: 0.9em;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    text-align: justify;
     }
 }
 
