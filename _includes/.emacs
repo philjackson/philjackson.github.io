@@ -31,9 +31,9 @@
   (string= (system-name) "phil-laptop"))
 
 (set-face-attribute 'default nil
-                    :font (concat "Jet Brains Mono "
+                    :font (concat "DejaVuSansMono Nerd Font "
                                   (if (on-laptop?)
-                                      "14"
+                                      "12"
                                     "10")))
 
 ;; this makes using simple, inline lambdas much nicer
@@ -319,10 +319,13 @@ vertical splits"
              (interactive)
              (let ((glob (ivy-completing-read "Glob?: " '("*.cljs"
                                                           "*.clj"
+                                                          "*.sql"
                                                           "*.md"
                                                           "*.styl"
                                                           "*.yml"
                                                           "*.css"
+                                                          "*.py"
+                                                          "*.edn"
                                                           "*.json"))))
                (counsel-projectile-rg (concat "--glob " glob))))
   :config
@@ -384,6 +387,8 @@ vertical splits"
              "<down>" 'drag-stuff-down))
 
 (use-package evil-matchit
+;; Press “%” to jump between matched tags in Emacs. For example, in
+;; HTML “<div>” and “</div>” are a pair of tags.
   :ensure t
   :after evil
   :config (global-evil-matchit-mode 1))
@@ -399,8 +404,8 @@ vertical splits"
           emacs-lisp-mode
           clojurescript-mode
           inferior-clojure-mode) . (lambda()
-          (smartparens-mode)
-          (smartparens-strict-mode))))
+                                     (smartparens-mode)
+                                     (smartparens-strict-mode))))
 
 (use-package evil-cleverparens
   :ensure t
@@ -515,7 +520,7 @@ vertical splits"
               tab-always-indent 'complete
               company-dabbrev-downcase 0)
   :general (nvmap "TAB" 'company-indent-or-complete-common)
-  :config (global-company-mode t))
+  :hook ((emacs-lisp-mode . company-mode)))
 
 (use-package markdown-mode
   :ensure t
@@ -552,10 +557,9 @@ vertical splits"
 
 ;; better f/F
 (use-package evil-snipe
-  :after magit
   :ensure t
-  :hook ((magit-mode) . turn-off-evil-snipe-override-mode)
-  :init (setq evil-snipe-scope 'line)
+  :init (setq evil-snipe-scope 'line
+              evil-snipe-disabled-modes '(magit-mode))
   :config (evil-snipe-override-mode 1))
 
 (use-package cider
@@ -569,15 +573,14 @@ vertical splits"
 (use-package lsp-mode
   :ensure t
   :hook (((clojure-mode clojurescript-mode sql-mode) . lsp))
-  :init (setq lsp-lens-enable t
-              lsp-modeline-code-actions-enable nil
+  :init (setq lsp-headerline-breadcrumb-enable nil
               lsp-modeline-diagnostics-enable nil
-              lsp-enable-indentation nil
-              lsp-headerline-breadcrumb-enable nil
-              lsp-prefer-flymake nil)
+              lsp-modeline-code-actions-enable nil)
   :general (nmap
              :prefix "SPC"
              :keymaps '(clojurescript-mode-map clojure-mode-map)
+             "," 'lsp-find-references
+             "." 'lsp-find-definition
              "rC" 'cider-jack-in'
              "rs" 'lsp-rename
              "rc" 'lsp-clojure-clean-ns
@@ -587,6 +590,7 @@ vertical splits"
 
 (use-package lsp-ui
   :ensure t
+  :disabled
   :init
   (setq lsp-ui-sideline-show-code-actions nil
         lsp-ui-sideline-show-diagnostics t
@@ -596,15 +600,22 @@ vertical splits"
     :keymaps '(clojurescript-mode-map clojure-mode-map)
     "SPC ," 'lsp-ui-peek-find-references)
 
-  ( :keymaps 'lsp-ui-peek-mode-map
-    "C-j" 'lsp-ui-peek--select-next
-    "C-k" 'lsp-ui-peek--select-prev))
+  (:keymaps 'lsp-ui-peek-mode-map
+            "C-j" 'lsp-ui-peek--select-next
+            "C-k" 'lsp-ui-peek--select-prev))
 
 (use-package evil-org
   :ensure t
   :after org
   :hook ((org-mode . evil-org-mode)
          (evil-org-mode-hook . evil-org-set-key-theme))
+  :general
+  (nmap
+    "SPC oa" 'org-agenda
+    "SPC ot" (interactively (find-file "~/MEGA/todo.org")))
+  (nmap
+    :keymaps '(org-mode-map)
+    "<up>" 'org-todo)
   :config (progn
             (require 'evil-org-agenda)
             (evil-org-agenda-set-keys)
@@ -666,7 +677,7 @@ vertical splits"
 
             (load-theme 'doom-challenger-deep t)
 
-            ;; ;; any global theme config goes here
+            ;; any global theme config goes here
             (set-face-attribute 'show-paren-match nil
                                 :foreground "#111"
                                 :background "orange")
@@ -676,8 +687,8 @@ vertical splits"
   :init (setq whitespace-style '(face
                                  tabs
                                  trailing
-                                 spaces
-                                 space-mark
+                                 ;spaces
+                                 ;space-mark
                                  space-before-tab
                                  empty
                                  space-after-tab
@@ -711,6 +722,7 @@ vertical splits"
 
 (use-package ivy-rich
   :ensure t
+  :disabled
   :after counsel ivy
   :config (progn
             (ivy-rich-mode 1)
@@ -826,6 +838,7 @@ vertical splits"
   :config (global-evil-vimish-fold-mode 1))
 
 (use-package magit-delta
+  :disabled
   :ensure t
   :after magit
   :hook (magit-mode . magit-delta-mode))
@@ -868,6 +881,7 @@ vertical splits"
     "bb" 'counsel-switch-buffer
     "ff" 'counsel-find-file
     "fp" 'counsel-git
+    "fP" 'counsel-projectile-find-file
     "fr" 'counsel-recentf)
   :config (progn
             (ivy-mode t)
@@ -907,22 +921,11 @@ vertical splits"
              "RET" 'code-review-comment-add-or-edit))
 
 (use-package mu4e
+  :disabled
   :config (require 'mu4e-config))
 
-(use-package org-roam
+(use-package highlight-indentation
   :ensure t
-  :after org
-  :general (nmap
-             "SPC o r n" 'org-roam-node-find
-             :keymaps 'org-mode-map
-             "SPC o r t" 'org-roam-buffer-toggle)
-  :custom (org-roam-directory (file-truename "~/MEGA/roam"))
-  :config (org-roam-db-autosync-mode))
-
-(use-package org-roam-ui
-  :ensure t
-  :after org-roam
-  :config (setq org-roam-ui-sync-theme t
-                org-roam-ui-follow t
-                org-roam-ui-update-on-save t
-                org-roam-ui-open-on-start t))
+  :after yaml-mode
+  :hook (yaml-mode . highlight-indentation-mode)
+  :config (set-face-background 'highlight-indentation-face "darkslateblue"))
