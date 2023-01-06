@@ -7,12 +7,14 @@ categories: clojure babashka
 
 ```clojure
 (defmacro named-time
-  "Evaluates expr and prints the `nme` and time it took.  Returns the
-  value of expr."
+  "Evaluates expr and prints the `nme` and the time it took. Returns the value of
+  expr."
   [nme# expr]
   `(let [start# (. System (nanoTime))
          ret# ~expr]
-     (prn (str "Elapsed time (" ~nme# ") " (/ (double (- (. System (nanoTime)) start#)) 1000000.0) " msecs"))
+     (prn (str "Elapsed time (" ~nme# ") "
+               (/ (double (- (. System (nanoTime)) start#)) 1000000.0)
+               " msecs"))
      ret#))
  ```
  
