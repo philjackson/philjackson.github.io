@@ -6,7 +6,7 @@ categories: emacs hydra doom
 ---
 At least in Doom Emacs the default keybindings for evil-mc are really cumbersome, here's a Hydra that makes things much easier:
 
-```Clojure
+```elisp
 (defhydra my-mc-hydra (:color pink
                        :hint nil
                        :pre (evil-mc-pause-cursors))
@@ -39,7 +39,7 @@ Current pattern: %`evil-mc-pattern
 
 Here's how I map it in Doom:
 
-```Clojure
+```elisp
 (map!
  (:when (featurep! :editor multiple-cursors)
   :prefix "g"
