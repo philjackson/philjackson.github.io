@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  Delta for Git & Magit
+title:  Delta for Git and Magit
 date:   Thu  9 Sep 14:58:52 BST 2021
 categories: magit git emacs delta
 ---
