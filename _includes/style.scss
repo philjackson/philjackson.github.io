@@ -1,93 +1,90 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap');
 
 body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-family: 'Roboto Slab', serif;
-    font-size: 1.3em;
-    background-color: #fffff8;
-    color: #111;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Roboto Slab', serif;
+  font-size: 1.3em;
+  background-color: #fffff8;
+  color: #111;
 }
 
 main {
-    max-width: 800px;
+  max-width: 800px;
 
-    p {
-        line-height: 1.5;
-    }
+  p {
+    line-height: 1.5;
+  }
 }
 
 a {
-    color: red;
+  color: red;
 }
 
 .publish-date {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 p img {
-    width: 100%;
-    height: auto;
+  width: 100%;
+  height: auto;
 }
 
 .post-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 
-    @media (max-width: 400px) {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+  @media (max-width: 400px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 .category-list {
-    font-size: 80%;
-    font-style: italic;
-    color: #bbb;
-}
-
-code {
-    font-size: 1.3em;
+  font-size: 80%;
+  font-style: italic;
+  color: #bbb;
 }
 
 .highlight {
-    border: 1px solid #eee;
-    border-radius: 5px;
-    padding: 5px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  padding: 5px;
 
-
-    pre {
-        font-size: 0.9em;
+  pre {
     white-space: pre-wrap;
-    word-wrap: break-word;
-    text-align: justify;
+    word-break: break-all;
+
+    code {
+      overflow-x: scroll;
     }
+  }
 }
 
 .end-of-content {
-    margin-top: 40px;
+  margin-top: 40px;
 }
 
 nav {
-    display: flex;
-    text-transform: uppercase;
-    font-size: 0.7em;
-    padding-bottom: 30px;
-    border-bottom: 1px solid #eee;
-    a {
-        color: #222;
-    }
+  display: flex;
+  text-transform: uppercase;
+  font-size: 0.7em;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #eee;
+  a {
+    color: #222;
+  }
 
-    div {
-        padding-right: 20px;
-    }
+  div {
+    padding-right: 20px;
+  }
 
-    @media (max-width: 400px) {
-        flex-direction: column;
-    }
+  @media (max-width: 400px) {
+    flex-direction: column;
+  }
 }
 
 .highlight table td { padding: 5px; }
