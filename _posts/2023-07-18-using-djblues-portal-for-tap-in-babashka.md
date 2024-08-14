@@ -4,13 +4,13 @@ title:  Using Djblue's portal for tap in Babashka
 date:   Tue 18 Jul 21:40:23 BST 2023
 categories: babashka clojure
 ---
-I often deal with a repl-crashing amount of data via Babashka and so needed to
-find a nice way of browsing data. In clojure I reach for hashp but this time I
-thought I'd try out [Chris Badahdah's Portal](https://github.com/djblue/portal)
-which describes itself as the following: "A clojure tool to navigate through
-your data". [Amazingly, you can even try it out online!](https://djblue.github.io/portal/)
+It's often the case one has to deal with a repl-crashing amount of data via
+Babashka. In clojure I reach for hashp but this time I thought I'd try out
+[Chris Badahdah's Portal](https://github.com/djblue/portal) which describes
+itself as the following: "A clojure tool to navigate through your data".
+[Amazingly, you can even try it out online!](https://djblue.github.io/portal/)
 
-Here's how I set it up:
+Here's how to set it up:
 
 In bb.edn:
 
