@@ -14,9 +14,10 @@ back.
 
 On Windows this is what [Cheat Engine](https://www.cheatengine.org/) is for,
 and on Linux there's already [scanmem](https://github.com/scanmem/scanmem),
-with GameConqueror as its GTK front-end. Both are far more capable — Cheat
-Engine especially, with its pointer scanning and disassembler. The itch was
-having the same thing in a terminal: no GTK, no Wine, and it works over ssh.
+with GameConqueror as its GTK front-end. Cheat Engine in particular still goes
+well beyond memhack, with pointer scanning and a disassembler; scanmem covers
+much the same day-to-day scanning ground that memhack does. The itch was mostly
+having that in a terminal: no GTK, no Wine, and it works over ssh.
 
 The scan expressions are close enough to scanmem's that muscle memory carries
 over:
@@ -35,3 +36,19 @@ That line-based repl is still there behind `-repl`, but the default is a
 things you'd normally want a gui for: values refreshing live, editing a match
 in place, and freezing an address so it gets rewritten on an interval and holds
 against the program's own writes.
+
+The current feature set:
+
+- Scans for integers (`i8`–`u64`), floats (`f32`/`f64`), byte arrays (hex
+  patterns) and strings
+- The usual operators: exact value, `>` `<` `>=` `<=` `!=`, ranges (`10..20`),
+  and relative scans (`changed`, `unchanged`, `inc`, `dec`, `inc 5`, …)
+- Progressive narrowing with undo, so a mis-scan isn't fatal
+- Live-updating match values, which you can pause
+- Editing values in place, and freezing an address to hold its value
+- A searchable process picker for choosing a target (`/` to filter)
+- Command history, cancellable scans (esc), and a configurable scan alignment
+  to trade thoroughness for speed
+- It only attaches around each operation, so it doesn't leave the target paused
+  while it sits idle
+- The scriptable line-based repl (`-repl`) alongside the TUI
